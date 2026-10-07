@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>國二英文大冒險 | 翰林 Unit 1 & 2 互動特訓基地</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+TC:wght@400;600;800&display=swap');
+    body {
+      font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+    }
+    .pop-card {
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pop-card:hover {
+      transform: translateY(-4px);
+    }
+    .bounce-active:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-900">
+
+  <!-- 頂部導覽列 -->
+  <header class="bg-slate-800/90 border-b border-slate-700/80 sticky top-0 z-50 backdrop-blur-md px-6 py-4">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <span class="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 font-black text-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+          G8
+        </span>
+        <div>
+          <h1 class="text-lg font-bold text-white tracking-wide">翰林國二英文：互動闖關基地</h1>
+          <p class="text-xs text-slate-400">Unit 1 所有格代名詞 ✕ Unit 2 Before / After / When</p>
+        </div>
+      </div>
+
+      <!-- 快捷切換 -->
+      <nav class="flex items-center gap-2">
+        <button onclick="switchTab('meme')" id="tab-meme" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-amber-400 text-slate-950 shadow-md">
+          <i class="fa-solid fa-face-laugh-squint mr-1"></i> 迷因暖身
+        </button>
+        <button onclick="switchTab('possessive')" id="tab-possessive" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+          <i class="fa-solid fa-gavel mr-1"></i> 失物招領法庭
+        </button>
+        <button onclick="switchTab('chrono')" id="tab-chrono" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+          <i class="fa-solid fa-clock-rotate-left mr-1"></i> 時間軸倒帶
+        </button>
+        <button onclick="switchTab('vault')" id="tab-vault" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+          <i class="fa-solid fa-skull mr-1"></i> 段考魔王陷阱
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 主要內容區 -->
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+
+    <!-- 1. 迷因破冰區 -->
+    <section id="sec-meme" class="tab-content space-y-6">
+      <div class="bg-gradient-to-br from-indigo-900/60 to-purple-900/40 p-6 rounded-3xl border border-indigo-500/30">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <span class="text-2xl">🔥</span> 國中生崩潰日常 Meme Generator
+          </h2>
+          <button onclick="nextMeme()" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-md transition bounce-active flex items-center gap-2">
+            <i class="fa-solid fa-shuffle"></i> 抽下一張迷因
+          </button>
+        </div>
+        <p class="text-sm text-indigo-200 mb-6">
+          每次滑迷因都是練習！國外迷因最常以 <strong>"When..."</strong> 當起首。看圖試著大聲唸出來，並感受句型的語氣。
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 text-center flex flex-col items-center justify-center min-h-[220px]">
+            <div id="meme-emoji" class="text-7xl mb-4 animate-bounce">😱</div>
+            <p id="meme-title" class="text-lg font-bold text-amber-300"></p>
+            <p id="meme-desc" class="text-xs text-slate-400 mt-1"></p>
+          </div>
+
+          <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 space-y-4">
+            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block">挑戰挑戰：用 When 造句</span>
+            <div id="meme-sentence" class="text-base text-slate-200 font-semibold bg-slate-900/80 p-4 rounded-xl border border-slate-700/60"></div>
+            <div class="flex gap-2">
+              <button onclick="speakCurrentSentence()" class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md transition bounce-active">
+                <i class="fa-solid fa-volume-high"></i> 聽母語者發音
+              </button>
+              <button onclick="fireConfetti()" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold text-sm transition bounce-active">
+                🎉 我會唸了！
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 所有格代名詞：失物招領法庭 -->
+    <section id="sec-possessive" class="tab-content hidden space-y-6">
+      <!-- 核心口訣卡片 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
+          <div class="text-amber-400 text-sm font-bold mb-1">📐 終極公式</div>
+          <div class="text-lg font-extrabold text-white">所有格 + 名詞 = 所有格代名詞</div>
+          <p class="text-xs text-slate-400 mt-2">my pen ➔ mine<br>her cat ➔ hers<br>their house ➔ theirs</p>
+        </div>
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
+          <div class="text-rose-400 text-sm font-bold mb-1">⚠️ 世紀大陷阱：Its</div>
+          <div class="text-lg font-extrabold text-white">It 沒有代名詞用法！</div>
+          <p class="text-xs text-slate-400 mt-2">英文母語者不說 <em>"This tail is its."</em><br>直接用 <em>"This is its tail."</em> 即可！</p>
+        </div>
+        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
+          <div class="text-emerald-400 text-sm font-bold mb-1">💡 雙重所有格</div>
+          <div class="text-lg font-extrabold text-white">a friend of mine</div>
+          <p class="text-xs text-slate-400 mt-2">千萬不要寫成 of me！<br>國二段考填空、選擇題必考題。</p>
+        </div>
+      </div>
+
+      <!-- 互動遊戲：失物招領法官判案 -->
+      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-xl font-bold flex items-center gap-2">
+              <i class="fa-solid fa-scale-balanced text-amber-400"></i> 失物招領法庭（Lost & Found）
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">法官，桌上有一堆遺失物，請選擇正確的所有格代名詞幫它們物歸原主！</p>
+          </div>
+          <span class="text-xs bg-slate-900 text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-full font-bold">
+            得分: <span id="court-score" class="text-sm">0</span>
+          </span>
+        </div>
+
+        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mb-6 flex flex-col md:flex-row items-center gap-6">
+          <div id="case-item-icon" class="text-6xl p-4 bg-slate-900 rounded-2xl border border-slate-800">🎧</div>
+          <div class="space-y-2 flex-1 text-center md:text-left">
+            <div id="case-claimant" class="text-xs font-bold text-amber-400 uppercase">失主：Leo 的耳機</div>
+            <div id="case-prompt" class="text-lg md:text-xl font-bold text-white">
+              "This is Leo's wireless earphone. It is not yours, it is ______."
+            </div>
+            <p class="text-xs text-slate-400">請在下方點擊最符合文法的選項：</p>
+          </div>
+        </div>
+
+        <div id="court-options" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <!-- 動態載入選項 -->
+        </div>
+
+        <div id="court-feedback" class="mt-4 hidden p-4 rounded-xl text-center text-sm font-bold"></div>
+      </div>
+    </section>
+
+    <!-- 3. 時間連接詞：Before / After / When 時間軸倒帶 -->
+    <section id="sec-chrono" class="tab-content hidden space-y-6">
+      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-xl font-bold flex items-center gap-2">
+              <i class="fa-solid fa-timeline text-emerald-400"></i> 時間軸物理倒帶器
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">
+              點擊連接詞，觀察動作 1 與動作 2 在時間軸上的實際發生順序！
+            </p>
+          </div>
+          <!-- 逗號口訣提醒 -->
+          <div class="bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs px-3 py-1.5 rounded-xl font-bold flex items-center gap-2">
+            <span>🔥 口訣：連接詞放句首有逗號 (,)，放句中不打逗號！</span>
+          </div>
+        </div>
+
+        <!-- 視覺時間軸 -->
+        <div class="relative bg-slate-950 p-6 rounded-2xl border border-slate-800 my-6">
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-2 font-mono">
+            <span>PAST (先發生) ⬅️</span>
+            <span>➡️ FUTURE (後發生)</span>
+          </div>
+          <div class="h-2 bg-slate-800 rounded-full relative my-8">
+            <div class="absolute -top-3 left-1/4 w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-xs shadow-lg shadow-indigo-500/30">1</div>
+            <div class="absolute -top-3 left-3/4 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-lg shadow-rose-500/30">2</div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-center mt-6">
+            <div class="bg-indigo-950/60 border border-indigo-800/60 p-3 rounded-xl">
+              <span class="text-xs font-bold text-indigo-400 block mb-1">【Action 1：先發生的事】</span>
+              <p id="timeline-act1" class="text-base font-bold text-white">刷牙 (brush my teeth)</p>
+            </div>
+            <div class="bg-rose-950/60 border border-rose-800/60 p-3 rounded-xl">
+              <span class="text-xs font-bold text-rose-400 block mb-1">【Action 2：後發生的事】</span>
+              <p id="timeline-act2" class="text-base font-bold text-white">去睡覺 (go to bed)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 切換句型模式 -->
+        <div class="flex flex-wrap gap-2 mb-4 justify-center">
+          <button onclick="setChronoMode('before_mid')" id="btn-before_mid" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-slate-950 transition bounce-active">
+            Before 在句中
+          </button>
+          <button onclick="setChronoMode('before_front')" id="btn-before_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
+            Before 在句首 (帶逗號)
+          </button>
+          <button onclick="setChronoMode('after_mid')" id="btn-after_mid" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
+            After 在句中
+          </button>
+          <button onclick="setChronoMode('after_front')" id="btn-after_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
+            After 在句首 (帶逗號)
+          </button>
+          <button onclick="setChronoMode('when_front')" id="btn-when_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
+            When 當...的時候
+          </button>
+        </div>
+
+        <!-- 動態生成的完美例句 -->
+        <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700 text-center space-y-3">
+          <p class="text-xs text-slate-400 font-semibold">生成句型演示：</p>
+          <div id="chrono-sentence-display" class="text-lg md:text-xl font-extrabold text-amber-300"></div>
+          <div class="flex justify-center gap-3">
+            <button onclick="speakSentence('chrono-sentence-display')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold border border-slate-600 transition bounce-active flex items-center gap-2">
+              <i class="fa-solid fa-volume-high text-amber-400"></i> 發音聽聽看
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 段考魔王陷阱庫 -->
+    <section id="sec-vault" class="tab-content hidden space-y-6">
+      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
+        <h3 class="text-xl font-bold flex items-center gap-2 mb-2">
+          <i class="fa-solid fa-skull-crossbones text-rose-400"></i> 段考最容易被坑的 3 大陷阱！
+        </h3>
+        <p class="text-xs text-slate-400 mb-6">考試前看這三題，至少多拿 10 分！</p>
+
+        <div class="space-y-4">
+          <!-- 陷阱 1 -->
+          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-rose-400">陷阱 1：It's 還是 Its？</span>
+              <button onclick="toggleTrap('trap-1')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
+            </div>
+            <p class="text-sm text-slate-300 mt-2">
+              The cat licked <span class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">its</span> paw. (O) <br>
+              The cat licked <span class="line-through text-rose-400 font-mono">it's</span> paw. (X)
+            </p>
+            <div id="trap-1" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
+              <strong class="text-slate-200">理由：</strong> <strong>It's</strong> 是 <strong>It is</strong> 或 <strong>It has</strong> 的縮寫！<strong>Its</strong> 才是「牠的」（所有格），千萬別加逗號！
+            </div>
+          </div>
+
+          <!-- 陷阱 2 -->
+          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-rose-400">陷阱 2：時間連接詞忘記打逗號</span>
+              <button onclick="toggleTrap('trap-2')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
+            </div>
+            <p class="text-sm text-slate-300 mt-2">
+              <span class="text-amber-300 font-mono">Before I slept,</span> I brushed my teeth. (O)<br>
+              <span class="line-through text-rose-400 font-mono">Before I slept</span> I brushed my teeth. (X)
+            </p>
+            <div id="trap-2" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
+              <strong class="text-slate-200">理由：</strong> 連接詞副詞子句放在句首時，兩句之間<strong>務必打逗號 (,)</strong>！如果是 <em>"I brushed my teeth before I slept."</em> 則<strong>不可加逗號</strong>。
+            </div>
+          </div>
+
+          <!-- 陷阱 3 -->
+          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-rose-400">陷阱 3：所有格代名詞後面偷帶名詞</span>
+              <button onclick="toggleTrap('trap-3')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
+            </div>
+            <p class="text-sm text-slate-300 mt-2">
+              This is <span class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">mine</span>. (O) <br>
+              This is <span class="line-through text-rose-400 font-mono">mine pen</span>. (X)
+            </p>
+            <div id="trap-3" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
+              <strong class="text-slate-200">理由：</strong> <strong>Mine = My pen</strong>。如果講了 <em>mine pen</em> 就等於講了 <em>my pen pen</em>！所有格代名詞後面<strong>絕對不能再接任何名詞</strong>。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800">
+    翰林版國二英文專用 ✕ 互動教學講義單頁網頁
+  </footer>
+
+  <script>
+    // --- 音效生成器 (Web Audio API) ---
+    function playBeep(freq = 520, duration = 0.15) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.log("Audio not allowed yet");
+      }
+    }
+
+    // --- 語音唸讀 (SpeechSynthesis) ---
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'en-US';
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      }
+    }
+
+    function speakSentence(elementId) {
+      const txt = document.getElementById(elementId).innerText;
+      speakText(txt);
+    }
+
+    function fireConfetti() {
+      playBeep(880, 0.2);
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.8 }
+      });
+    }
+
+    // --- 切換 Tab ---
+    function switchTab(tabId) {
+      playBeep(440, 0.08);
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-400', 'text-slate-950', 'shadow-md');
+        btn.classList.add('text-slate-300');
+      });
+      document.getElementById('sec-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.classList.add('bg-amber-400', 'text-slate-950', 'shadow-md');
+      activeBtn.classList.remove('text-slate-300');
+    }
+
+    // --- 迷因產生器資料 ---
+    const memes = [
+      {
+        emoji: "🎒",
+        title: "當老師說：把課本全部收進抽屜...",
+        desc: "心跳直接飆到 180 的瞬間",
+        sentence: "When the teacher says 'Take out a piece of paper', everyone panics."
+      },
+      {
+        emoji: "🚪",
+        title: "當媽媽不敲門直接推開房間門時...",
+        desc: "明明在寫功課，看起來卻像在做壞事",
+        sentence: "When Mom opens my door without knocking, I freeze."
+      },
+      {
+        emoji: "⏰",
+        title: "鬧鐘響了，你以為還有很久...",
+        desc: "結果再閉眼 5 秒，世界已經過了 1 小時",
+        sentence: "When I close my eyes for five seconds, one hour passes."
+      },
+      {
+        emoji: "🍕",
+        title: "當你弟偷吃你留在冰箱最後一片披薩...",
+        desc: "手足世界大戰一觸即發",
+        sentence: "When my brother eats my pizza, I get mad."
+      }
+    ];
+
+    let currentMemeIdx = 0;
+    function renderMeme() {
+      const m = memes[currentMemeIdx];
+      document.getElementById('meme-emoji').innerText = m.emoji;
+      document.getElementById('meme-title').innerText = m.title;
+      document.getElementById('meme-desc').innerText = m.desc;
+      document.getElementById('meme-sentence').innerText = m.sentence;
+    }
+    function nextMeme() {
+      currentMemeIdx = (currentMemeIdx + 1) % memes.length;
+      renderMeme();
+      playBeep(600, 0.1);
+    }
+    function speakCurrentSentence() {
+      const s = memes[currentMemeIdx].sentence;
+      speakText(s);
+    }
+
+    // --- 失物招領法庭資料 ---
+    const courtCases = [
+      {
+        icon: "🎧",
+        claimant: "失主：Leo 的耳機",
+        prompt: "This is Leo's wireless earphone. It is not yours, it is ______.",
+        answer: "his",
+        options: ["he's", "his", "him", "her"]
+      },
+      {
+        icon: "🎒",
+        claimant: "失主：Tina 的書包",
+        prompt: "That pink backpack belongs to Tina. It is ______.",
+        answer: "hers",
+        options: ["her", "hers", "she's", "their"]
+      },
+      {
+        icon: "🚲",
+        claimant: "失主：我們全家的腳踏車",
+        prompt: "You can ride your bike, and we will ride ______.",
+        answer: "ours",
+        options: ["our", "ours", "us", "we's"]
+      },
+      {
+        icon: "✏️",
+        claimant: "失主：我的自動鉛筆",
+        prompt: "Don't take that pencil! It is not yours, it is ______.",
+        answer: "mine",
+        options: ["my", "me", "mine", "I"]
+      }
+    ];
+
+    let currentCaseIdx = 0;
+    let score = 0;
+
+    function renderCourtCase() {
+      const c = courtCases[currentCaseIdx];
+      document.getElementById('case-item-icon').innerText = c.icon;
+      document.getElementById('case-claimant').innerText = c.claimant;
+      document.getElementById('case-prompt').innerHTML = c.prompt.replace("______", '<span class="text-amber-400 underline decoration-wavy">______</span>');
+      
+      const optContainer = document.getElementById('court-options');
+      optContainer.innerHTML = '';
+      c.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "py-3 px-4 bg-slate-900 hover:bg-indigo-600 text-white font-mono font-bold text-lg rounded-xl border border-slate-700 transition bounce-active";
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optContainer.appendChild(btn);
+      });
+
+      const fb = document.getElementById('court-feedback');
+      fb.classList.add('hidden');
+    }
+
+    function checkAnswer(chosen) {
+      const c = courtCases[currentCaseIdx];
+      const fb = document.getElementById('court-feedback');
+      fb.classList.remove('hidden');
+
+      if (chosen === c.answer) {
+        score += 10;
+        document.getElementById('court-score').innerText = score;
+        fb.className = "mt-4 p-4 rounded-xl text-center text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        fb.innerHTML = `🎉 答對了！法官判案成功！所有格代名詞正是 <strong>${chosen}</strong>。`;
+        fireConfetti();
+        setTimeout(() => {
+          currentCaseIdx = (currentCaseIdx + 1) % courtCases.length;
+          renderCourtCase();
+        }, 1500);
+      } else {
+        playBeep(220, 0.2);
+        fb.className = "mt-4 p-4 rounded-xl text-center text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        fb.innerHTML = `❌ 哎呀不對喔！仔細想想公式：所有格 + 名詞 = 所有格代名詞。再試一次！`;
+      }
+    }
+
+    // --- 時間軸模式設定 ---
+    function setChronoMode(mode) {
+      playBeep(520, 0.1);
+      document.querySelectorAll('.chrono-btn').forEach(b => {
+        b.classList.remove('bg-amber-400', 'text-slate-950');
+        b.classList.add('bg-slate-700', 'text-slate-200');
+      });
+      document.getElementById('btn-' + mode).classList.add('bg-amber-400', 'text-slate-950');
+      document.getElementById('btn-' + mode).classList.remove('bg-slate-700', 'text-slate-200');
+
+      const disp = document.getElementById('chrono-sentence-display');
+      if (mode === 'before_mid') {
+        disp.innerHTML = 'I brush my teeth <span class="text-white underline decoration-amber-400 font-black">before</span> I go to bed.';
+      } else if (mode === 'before_front') {
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">Before</span> I go to bed<span class="text-rose-400 text-2xl font-black">,</span> I brush my teeth.';
+      } else if (mode === 'after_mid') {
+        disp.innerHTML = 'I go to bed <span class="text-white underline decoration-amber-400 font-black">after</span> I brush my teeth.';
+      } else if (mode === 'after_front') {
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">After</span> I brush my teeth<span class="text-rose-400 text-2xl font-black">,</span> I go to bed.';
+      } else if (mode === 'when_front') {
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">When</span> it is 10 PM<span class="text-rose-400 text-2xl font-black">,</span> I brush my teeth.';
+      }
+    }
+
+    function toggleTrap(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    // 初始渲染
+    window.onload = () => {
+      renderMeme();
+      renderCourtCase();
+      setChronoMode('before_mid');
+    };
+  </script>
+</body>
+</html>
