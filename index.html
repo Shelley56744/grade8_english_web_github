@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>國二英文大冒險 | 翰林 Unit 1 & 2 互動特訓基地</title>
+  <title>國二英文全方位互動闖關島 | 翰林重點文法特訓</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome -->
@@ -29,256 +29,373 @@
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-900">
 
   <!-- 頂部導覽列 -->
-  <header class="bg-slate-800/90 border-b border-slate-700/80 sticky top-0 z-50 backdrop-blur-md px-6 py-4">
-    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+  <header class="bg-slate-800/95 border-b border-slate-700/80 sticky top-0 z-50 backdrop-blur-md px-4 py-3 md:px-6">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <span class="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 font-black text-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
+        <span class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 text-slate-950 font-black text-xl flex items-center justify-center shadow-lg shadow-amber-400/20">
           G8
         </span>
         <div>
-          <h1 class="text-lg font-bold text-white tracking-wide">翰林國二英文：互動闖關基地</h1>
-          <p class="text-xs text-slate-400">Unit 1 所有格代名詞 ✕ Unit 2 Before / After / When</p>
+          <h1 class="text-base md:text-lg font-bold text-white tracking-wide">國二英文全方位互動特訓基地</h1>
+          <p class="text-xs text-slate-400">天氣問答 ✕ 從屬連接詞 ✕ 授與動詞 ✕ 所有格代名詞</p>
         </div>
       </div>
 
-      <!-- 快捷切換 -->
-      <nav class="flex items-center gap-2">
-        <button onclick="switchTab('meme')" id="tab-meme" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition bg-amber-400 text-slate-950 shadow-md">
-          <i class="fa-solid fa-face-laugh-squint mr-1"></i> 迷因暖身
-        </button>
-        <button onclick="switchTab('possessive')" id="tab-possessive" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
-          <i class="fa-solid fa-gavel mr-1"></i> 失物招領法庭
-        </button>
-        <button onclick="switchTab('chrono')" id="tab-chrono" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
-          <i class="fa-solid fa-clock-rotate-left mr-1"></i> 時間軸倒帶
-        </button>
-        <button onclick="switchTab('vault')" id="tab-vault" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
-          <i class="fa-solid fa-skull mr-1"></i> 段考魔王陷阱
-        </button>
-      </nav>
+      <!-- 總積分標籤 -->
+      <div class="flex items-center gap-2">
+        <div class="bg-slate-900/90 border border-amber-400/40 px-3.5 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner">
+          <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+          <span class="text-xs text-slate-300 font-semibold">冒險積分：</span>
+          <span id="global-score" class="text-base font-black text-amber-400 font-mono">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模組快速導覽分頁 -->
+    <div class="max-w-6xl mx-auto mt-3 flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+      <button onclick="switchTab('weather')" id="tab-weather" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition bg-amber-400 text-slate-950 shadow-md">
+        <i class="fa-solid fa-cloud-sun-rain mr-1"></i> 1. 天氣預報播報台
+      </button>
+      <button onclick="switchTab('chrono')" id="tab-chrono" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+        <i class="fa-solid fa-timeline mr-1"></i> 2. 時間軸倒帶 (Before/After/When)
+      </button>
+      <button onclick="switchTab('dative')" id="tab-dative" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+        <i class="fa-solid fa-gift mr-1"></i> 3. 授與動詞派件員 (to vs for)
+      </button>
+      <button onclick="switchTab('possessive')" id="tab-possessive" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+        <i class="fa-solid fa-scale-balanced mr-1"></i> 4. 所有格失物招領法庭
+      </button>
+      <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">
+        <i class="fa-solid fa-bolt mr-1"></i> 5. 段考綜合大魔王
+      </button>
     </div>
   </header>
 
   <!-- 主要內容區 -->
-  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8 space-y-8">
 
-    <!-- 1. 迷因破冰區 -->
-    <section id="sec-meme" class="tab-content space-y-6">
-      <div class="bg-gradient-to-br from-indigo-900/60 to-purple-900/40 p-6 rounded-3xl border border-indigo-500/30">
-        <div class="flex items-center justify-between mb-4">
+    <!-- 1. 天氣單元：氣象播報主播台 -->
+    <section id="sec-weather" class="tab-content space-y-6">
+      <div class="bg-gradient-to-br from-sky-950/70 to-slate-900 border border-sky-500/30 p-6 rounded-3xl relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
-            <span class="text-2xl">🔥</span> 國中生崩潰日常 Meme Generator
+            <span class="text-2xl">🌦️</span> 氣象主播台：天氣問答 3 大必考句型
           </h2>
-          <button onclick="nextMeme()" class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-xl text-sm font-bold shadow-md transition bounce-active flex items-center gap-2">
-            <i class="fa-solid fa-shuffle"></i> 抽下一張迷因
-          </button>
-        </div>
-        <p class="text-sm text-indigo-200 mb-6">
-          每次滑迷因都是練習！國外迷因最常以 <strong>"When..."</strong> 當起首。看圖試著大聲唸出來，並感受句型的語氣。
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 text-center flex flex-col items-center justify-center min-h-[220px]">
-            <div id="meme-emoji" class="text-7xl mb-4 animate-bounce">😱</div>
-            <p id="meme-title" class="text-lg font-bold text-amber-300"></p>
-            <p id="meme-desc" class="text-xs text-slate-400 mt-1"></p>
-          </div>
-
-          <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 space-y-4">
-            <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider block">挑戰挑戰：用 When 造句</span>
-            <div id="meme-sentence" class="text-base text-slate-200 font-semibold bg-slate-900/80 p-4 rounded-xl border border-slate-700/60"></div>
-            <div class="flex gap-2">
-              <button onclick="speakCurrentSentence()" class="px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 rounded-xl font-bold text-sm flex items-center gap-2 shadow-md transition bounce-active">
-                <i class="fa-solid fa-volume-high"></i> 聽母語者發音
-              </button>
-              <button onclick="fireConfetti()" class="px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-semibold text-sm transition bounce-active">
-                🎉 我會唸了！
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2. 所有格代名詞：失物招領法庭 -->
-    <section id="sec-possessive" class="tab-content hidden space-y-6">
-      <!-- 核心口訣卡片 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
-          <div class="text-amber-400 text-sm font-bold mb-1">📐 終極公式</div>
-          <div class="text-lg font-extrabold text-white">所有格 + 名詞 = 所有格代名詞</div>
-          <p class="text-xs text-slate-400 mt-2">my pen ➔ mine<br>her cat ➔ hers<br>their house ➔ theirs</p>
-        </div>
-        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
-          <div class="text-rose-400 text-sm font-bold mb-1">⚠️ 世紀大陷阱：Its</div>
-          <div class="text-lg font-extrabold text-white">It 沒有代名詞用法！</div>
-          <p class="text-xs text-slate-400 mt-2">英文母語者不說 <em>"This tail is its."</em><br>直接用 <em>"This is its tail."</em> 即可！</p>
-        </div>
-        <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700 pop-card">
-          <div class="text-emerald-400 text-sm font-bold mb-1">💡 雙重所有格</div>
-          <div class="text-lg font-extrabold text-white">a friend of mine</div>
-          <p class="text-xs text-slate-400 mt-2">千萬不要寫成 of me！<br>國二段考填空、選擇題必考題。</p>
-        </div>
-      </div>
-
-      <!-- 互動遊戲：失物招領法官判案 -->
-      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <h3 class="text-xl font-bold flex items-center gap-2">
-              <i class="fa-solid fa-scale-balanced text-amber-400"></i> 失物招領法庭（Lost & Found）
-            </h3>
-            <p class="text-xs text-slate-400 mt-1">法官，桌上有一堆遺失物，請選擇正確的所有格代名詞幫它們物歸原主！</p>
-          </div>
-          <span class="text-xs bg-slate-900 text-amber-400 border border-amber-400/30 px-3 py-1.5 rounded-full font-bold">
-            得分: <span id="court-score" class="text-sm">0</span>
+          <span class="bg-sky-900/60 border border-sky-400/40 text-sky-200 text-xs px-3 py-1 rounded-full font-bold">
+            Unit 必備單元
           </span>
         </div>
 
-        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mb-6 flex flex-col md:flex-row items-center gap-6">
-          <div id="case-item-icon" class="text-6xl p-4 bg-slate-900 rounded-2xl border border-slate-800">🎧</div>
-          <div class="space-y-2 flex-1 text-center md:text-left">
-            <div id="case-claimant" class="text-xs font-bold text-amber-400 uppercase">失主：Leo 的耳機</div>
-            <div id="case-prompt" class="text-lg md:text-xl font-bold text-white">
-              "This is Leo's wireless earphone. It is not yours, it is ______."
-            </div>
-            <p class="text-xs text-slate-400">請在下方點擊最符合文法的選項：</p>
+        <!-- 3 大句型對比卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+          <div class="bg-slate-950/80 p-4 rounded-2xl border border-sky-800/40 pop-card">
+            <span class="text-xs font-bold text-amber-400">口訣 1：詢問天氣</span>
+            <div class="text-white font-extrabold text-sm md:text-base mt-1">How's the weather?</div>
+            <div class="text-sky-300 font-extrabold text-sm md:text-base">= What's the weather like?</div>
+            <p class="text-xs text-rose-300 mt-2 font-mono">⚠️ 絕對不可寫成 How is the weather like!</p>
+          </div>
+          <div class="bg-slate-950/80 p-4 rounded-2xl border border-sky-800/40 pop-card">
+            <span class="text-xs font-bold text-emerald-400">口訣 2：形容詞 vs 動詞</span>
+            <div class="text-white font-extrabold text-sm md:text-base mt-1">It is rainy / snowy. (adj.)</div>
+            <div class="text-emerald-300 font-extrabold text-sm md:text-base">It rains / snows. (v.)</div>
+            <p class="text-xs text-slate-400 mt-2">be動詞配形容詞，一般動詞注意三單加 s。</p>
+          </div>
+          <div class="bg-slate-950/80 p-4 rounded-2xl border border-sky-800/40 pop-card">
+            <span class="text-xs font-bold text-purple-400">口訣 3：名詞 (雨水/雪)</span>
+            <div class="text-white font-extrabold text-sm md:text-base mt-1">We have a lot of rain.</div>
+            <div class="text-purple-300 font-extrabold text-sm md:text-base">There is a lot of snow.</div>
+            <p class="text-xs text-slate-400 mt-2">雨水、雪為不可數名詞，配 a lot of / much。</p>
           </div>
         </div>
 
-        <div id="court-options" class="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <!-- 動態載入選項 -->
-        </div>
+        <!-- 互動互動：國際天氣主播連線遊戲 -->
+        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider block">LIVE 實況連線</span>
+              <h3 class="text-lg font-bold text-white" id="weather-city-title">連線城市：台北 (Taipei)</h3>
+            </div>
+            <button onclick="nextWeatherCity()" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold transition bounce-active flex items-center gap-1.5">
+              <i class="fa-solid fa-globe"></i> 切換下一個城市
+            </button>
+          </div>
 
-        <div id="court-feedback" class="mt-4 hidden p-4 rounded-xl text-center text-sm font-bold"></div>
+          <div class="flex flex-col md:flex-row items-center gap-6 bg-slate-900/90 p-5 rounded-2xl border border-slate-800">
+            <div id="weather-icon" class="text-6xl p-4 bg-slate-800/80 rounded-2xl border border-slate-700">🌧️</div>
+            <div class="space-y-2 flex-1 text-center md:text-left">
+              <p id="weather-condition-desc" class="text-sm text-slate-300 font-semibold"></p>
+              <div id="weather-prompt" class="text-base md:text-lg font-bold text-amber-300 font-mono"></div>
+            </div>
+          </div>
+
+          <!-- 選項 -->
+          <div id="weather-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4"></div>
+          <div id="weather-feedback" class="mt-4 hidden p-3 rounded-xl text-center text-sm font-bold"></div>
+        </div>
       </div>
     </section>
 
-    <!-- 3. 時間連接詞：Before / After / When 時間軸倒帶 -->
+    <!-- 2. 從屬連接詞：Before / After / When 時間軸倒帶 -->
     <section id="sec-chrono" class="tab-content hidden space-y-6">
-      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-          <div>
-            <h3 class="text-xl font-bold flex items-center gap-2">
-              <i class="fa-solid fa-timeline text-emerald-400"></i> 時間軸物理倒帶器
-            </h3>
-            <p class="text-xs text-slate-400 mt-1">
-              點擊連接詞，觀察動作 1 與動作 2 在時間軸上的實際發生順序！
-            </p>
-          </div>
+      <div class="bg-gradient-to-br from-indigo-950/70 to-slate-900 border border-indigo-500/30 p-6 rounded-3xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <span class="text-2xl">⏳</span> 時間軸倒帶模擬器（Before / After / When）
+          </h2>
           <!-- 逗號口訣提醒 -->
-          <div class="bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs px-3 py-1.5 rounded-xl font-bold flex items-center gap-2">
-            <span>🔥 口訣：連接詞放句首有逗號 (,)，放句中不打逗號！</span>
+          <div class="bg-amber-950/80 border border-amber-500/50 text-amber-300 text-xs px-3 py-1.5 rounded-xl font-bold">
+            🔥 逗號黃金法則：連接詞放句首必須打逗號 (,)；放在句中絕對不打！
           </div>
         </div>
 
         <!-- 視覺時間軸 -->
-        <div class="relative bg-slate-950 p-6 rounded-2xl border border-slate-800 my-6">
+        <div class="relative bg-slate-950 p-6 rounded-2xl border border-slate-800 my-4">
           <div class="flex items-center justify-between text-xs text-slate-500 mb-2 font-mono">
             <span>PAST (先發生) ⬅️</span>
             <span>➡️ FUTURE (後發生)</span>
           </div>
           <div class="h-2 bg-slate-800 rounded-full relative my-8">
-            <div class="absolute -top-3 left-1/4 w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-xs shadow-lg shadow-indigo-500/30">1</div>
-            <div class="absolute -top-3 left-3/4 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold text-xs shadow-lg shadow-rose-500/30">2</div>
+            <div class="absolute -top-3 left-1/4 w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center font-black text-xs shadow-lg shadow-indigo-500/40">1</div>
+            <div class="absolute -top-3 left-3/4 w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center font-black text-xs shadow-lg shadow-rose-500/40">2</div>
           </div>
           <div class="grid grid-cols-2 gap-4 text-center mt-6">
-            <div class="bg-indigo-950/60 border border-indigo-800/60 p-3 rounded-xl">
-              <span class="text-xs font-bold text-indigo-400 block mb-1">【Action 1：先發生的事】</span>
-              <p id="timeline-act1" class="text-base font-bold text-white">刷牙 (brush my teeth)</p>
+            <div class="bg-indigo-950/60 border border-indigo-800/60 p-3.5 rounded-xl">
+              <span class="text-xs font-bold text-indigo-400 block mb-1">【Action 1：第一動作】</span>
+              <p class="text-sm md:text-base font-bold text-white">finish homework (寫完作業)</p>
             </div>
-            <div class="bg-rose-950/60 border border-rose-800/60 p-3 rounded-xl">
-              <span class="text-xs font-bold text-rose-400 block mb-1">【Action 2：後發生的事】</span>
-              <p id="timeline-act2" class="text-base font-bold text-white">去睡覺 (go to bed)</p>
+            <div class="bg-rose-950/60 border border-rose-800/60 p-3.5 rounded-xl">
+              <span class="text-xs font-bold text-rose-400 block mb-1">【Action 2：第二動作】</span>
+              <p class="text-sm md:text-base font-bold text-white">play video games (打電動)</p>
             </div>
           </div>
         </div>
 
-        <!-- 切換句型模式 -->
-        <div class="flex flex-wrap gap-2 mb-4 justify-center">
-          <button onclick="setChronoMode('before_mid')" id="btn-before_mid" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-slate-950 transition bounce-active">
-            Before 在句中
-          </button>
-          <button onclick="setChronoMode('before_front')" id="btn-before_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
-            Before 在句首 (帶逗號)
-          </button>
-          <button onclick="setChronoMode('after_mid')" id="btn-after_mid" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
-            After 在句中
-          </button>
-          <button onclick="setChronoMode('after_front')" id="btn-after_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
-            After 在句首 (帶逗號)
-          </button>
-          <button onclick="setChronoMode('when_front')" id="btn-when_front" class="chrono-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-700 text-slate-200 transition bounce-active">
-            When 當...的時候
-          </button>
+        <!-- 切換按鈕 -->
+        <div class="flex flex-wrap gap-2 justify-center mb-4">
+          <button onclick="setChronoMode('before_mid')" id="btn-before_mid" class="chrono-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-400 text-slate-950 transition bounce-active">Before 在句中</button>
+          <button onclick="setChronoMode('before_front')" id="btn-before_front" class="chrono-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 transition bounce-active">Before 在句首 (帶逗號)</button>
+          <button onclick="setChronoMode('after_mid')" id="btn-after_mid" class="chrono-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 transition bounce-active">After 在句中</button>
+          <button onclick="setChronoMode('after_front')" id="btn-after_front" class="chrono-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 transition bounce-active">After 在句首 (帶逗號)</button>
+          <button onclick="setChronoMode('when_front')" id="btn-when_front" class="chrono-btn px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 transition bounce-active">When 在句首 (迷因模式)</button>
         </div>
 
-        <!-- 動態生成的完美例句 -->
+        <!-- 句型演示方塊 -->
         <div class="bg-slate-900 p-5 rounded-2xl border border-slate-700 text-center space-y-3">
-          <p class="text-xs text-slate-400 font-semibold">生成句型演示：</p>
-          <div id="chrono-sentence-display" class="text-lg md:text-xl font-extrabold text-amber-300"></div>
-          <div class="flex justify-center gap-3">
-            <button onclick="speakSentence('chrono-sentence-display')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold border border-slate-600 transition bounce-active flex items-center gap-2">
-              <i class="fa-solid fa-volume-high text-amber-400"></i> 發音聽聽看
-            </button>
+          <p class="text-xs text-slate-400">句型排列結果：</p>
+          <div id="chrono-sentence-display" class="text-base md:text-xl font-black text-amber-300"></div>
+          <button onclick="speakSentence('chrono-sentence-display')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold border border-slate-600 transition bounce-active inline-flex items-center gap-2">
+            <i class="fa-solid fa-volume-high text-amber-400"></i> 發音聽聽看
+          </button>
+        </div>
+
+        <!-- 互動排詞小測驗 -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 mt-6">
+          <span class="text-xs font-bold text-amber-400 block mb-2">🎯 快問快答：動作先後順序</span>
+          <p class="text-sm text-slate-200 mb-3" id="chrono-quiz-question">
+            題目：「<span class="text-rose-400 font-bold">After</span> he ate breakfast, Leo brushed his teeth.」請問 Leo 先做了什麼事？
+          </p>
+          <div class="grid grid-cols-2 gap-3" id="chrono-quiz-btns">
+            <button onclick="answerChronoQuiz(1)" class="py-2.5 px-4 bg-slate-900 hover:bg-indigo-600 rounded-xl text-xs md:text-sm font-bold border border-slate-700">先吃早餐 (ate breakfast)</button>
+            <button onclick="answerChronoQuiz(2)" class="py-2.5 px-4 bg-slate-900 hover:bg-indigo-600 rounded-xl text-xs md:text-sm font-bold border border-slate-700">先刷牙 (brushed teeth)</button>
           </div>
+          <div id="chrono-quiz-feedback" class="mt-3 hidden p-3 rounded-xl text-xs font-bold"></div>
         </div>
       </div>
     </section>
 
-    <!-- 4. 段考魔王陷阱庫 -->
-    <section id="sec-vault" class="tab-content hidden space-y-6">
-      <div class="bg-slate-800/90 border border-slate-700 rounded-3xl p-6">
-        <h3 class="text-xl font-bold flex items-center gap-2 mb-2">
-          <i class="fa-solid fa-skull-crossbones text-rose-400"></i> 段考最容易被坑的 3 大陷阱！
-        </h3>
-        <p class="text-xs text-slate-400 mb-6">考試前看這三題，至少多拿 10 分！</p>
+    <!-- 3. 授與動詞：快遞派件員 (to vs for) -->
+    <section id="sec-dative" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-br from-emerald-950/70 to-slate-900 border border-emerald-500/30 p-6 rounded-3xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <span class="text-2xl">📦</span> 授與動詞快遞局（Dative Verbs: TO vs FOR）
+          </h2>
+          <span class="bg-emerald-900/60 border border-emerald-400/40 text-emerald-200 text-xs px-3 py-1 rounded-full font-bold">
+            國二必考雙受詞
+          </span>
+        </div>
 
-        <div class="space-y-4">
-          <!-- 陷阱 1 -->
-          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-bold text-rose-400">陷阱 1：It's 還是 Its？</span>
-              <button onclick="toggleTrap('trap-1')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
+        <!-- 觀念拆解 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-2 text-indigo-400 font-bold text-sm mb-2">
+              <i class="fa-solid fa-arrow-right"></i> 介系詞配 【TO】（強調方向、轉交）
             </div>
-            <p class="text-sm text-slate-300 mt-2">
-              The cat licked <span class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">its</span> paw. (O) <br>
-              The cat licked <span class="line-through text-rose-400 font-mono">it's</span> paw. (X)
+            <p class="text-xs text-slate-300 leading-relaxed">
+              物體或訊息直接從我手中「傳遞轉交」給對方：<br>
+              <strong class="text-white">give, send, show, teach, write, tell, lend</strong><br>
+              <span class="text-amber-300 font-mono mt-1 block">He gave a gift <strong>to</strong> me.</span>
             </p>
-            <div id="trap-1" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
-              <strong class="text-slate-200">理由：</strong> <strong>It's</strong> 是 <strong>It is</strong> 或 <strong>It has</strong> 的縮寫！<strong>Its</strong> 才是「牠的」（所有格），千萬別加逗號！
+          </div>
+
+          <div class="bg-slate-950/80 p-5 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-2 text-rose-400 font-bold text-sm mb-2">
+              <i class="fa-solid fa-heart"></i> 介系詞配 【FOR】（強調付出心力、為了某人）
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              需要花時間、金錢或心力「特別為對方準備」：<br>
+              <strong class="text-white">buy, make, cook, bake, prepare, find</strong><br>
+              <span class="text-amber-300 font-mono mt-1 block">Mom baked a cake <strong>for</strong> us.</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- 代名詞黃金規則 -->
+        <div class="bg-amber-950/40 border border-amber-500/30 p-4 rounded-2xl text-xs text-amber-200 flex items-center gap-3">
+          <span class="text-2xl">🚨</span>
+          <div>
+            <strong>代名詞受詞大陷阱：</strong>如果物品是代名詞（it / them），必須用 <em>give it to me</em>，<strong>絕對不能說 <s>give me it</s></strong>！
+          </div>
+        </div>
+
+        <!-- 互動遊戲：快遞分揀台 -->
+        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block">快遞分揀任務</span>
+              <h3 class="text-base md:text-lg font-bold text-white">請選擇這份禮物該投遞給 [TO] 還是 [FOR] 箱子！</h3>
+            </div>
+            <span class="text-xs bg-slate-900 border border-slate-700 px-3 py-1 rounded-full text-slate-300">
+              第 <span id="dative-round" class="text-amber-400 font-bold">1</span> / 4 題
+            </span>
+          </div>
+
+          <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 text-center space-y-3">
+            <div id="dative-item-icon" class="text-5xl animate-pulse">🎂</div>
+            <div id="dative-sentence" class="text-base md:text-lg font-extrabold text-white font-mono">
+              "Dad made a delicious chocolate cake ______ me."
             </div>
           </div>
 
-          <!-- 陷阱 2 -->
-          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-bold text-rose-400">陷阱 2：時間連接詞忘記打逗號</span>
-              <button onclick="toggleTrap('trap-2')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <button onclick="checkDativeAnswer('to')" class="py-4 bg-indigo-600/80 hover:bg-indigo-500 text-white rounded-2xl font-black text-lg border border-indigo-400/40 shadow-lg transition bounce-active flex flex-col items-center justify-center">
+              <span>投遞給 【 TO 】</span>
+              <span class="text-xs font-normal text-indigo-200 mt-1">方向轉移、直接傳遞</span>
+            </button>
+            <button onclick="checkDativeAnswer('for')" class="py-4 bg-rose-600/80 hover:bg-rose-500 text-white rounded-2xl font-black text-lg border border-rose-400/40 shadow-lg transition bounce-active flex flex-col items-center justify-center">
+              <span>投遞給 【 FOR 】</span>
+              <span class="text-xs font-normal text-rose-200 mt-1">花費心力、特別準備</span>
+            </button>
+          </div>
+          <div id="dative-feedback" class="mt-4 hidden p-3 rounded-xl text-center text-sm font-bold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 所有格代名詞：失物招領法庭 -->
+    <section id="sec-possessive" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-br from-purple-950/70 to-slate-900 border border-purple-500/30 p-6 rounded-3xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <span class="text-2xl">⚖️</span> 失物招領法庭（所有格 vs 所有格代名詞）
+          </h2>
+          <span class="bg-purple-900/60 border border-purple-400/40 text-purple-200 text-xs px-3 py-1 rounded-full font-bold">
+            代換精準度特訓
+          </span>
+        </div>
+
+        <!-- 3 格位速記表 -->
+        <div class="bg-slate-950/90 rounded-2xl border border-slate-800 p-4 overflow-x-auto my-4">
+          <table class="w-full text-left text-xs md:text-sm">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="pb-2">主格 (S)</th>
+                <th class="pb-2">所有格 (my/your) + 名詞</th>
+                <th class="pb-2 text-amber-400">所有格代名詞 (獨立使用)</th>
+                <th class="pb-2 text-rose-400">考試陷阱</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 font-mono">
+              <tr>
+                <td class="py-2 text-slate-300">I</td>
+                <td class="py-2">my pen</td>
+                <td class="py-2 text-amber-300 font-bold">mine</td>
+                <td class="py-2 text-rose-300">不可寫 a friend of me ❌ ➔ of mine ⭕</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300">You</td>
+                <td class="py-2">your cat</td>
+                <td class="py-2 text-amber-300 font-bold">yours</td>
+                <td class="py-2 text-slate-400">字尾加 s，不加逗號</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300">He / She</td>
+                <td class="py-2">his bag / her book</td>
+                <td class="py-2 text-amber-300 font-bold">his / hers</td>
+                <td class="py-2 text-slate-400">his 的代名詞依舊是 his</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300">It</td>
+                <td class="py-2 text-emerald-300 font-bold">its tail</td>
+                <td class="py-2 text-slate-500 font-italic">無所有格代名詞</td>
+                <td class="py-2 text-rose-400 font-bold">it's 是 it is 縮寫！its 才是所有格！</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300">We / They</td>
+                <td class="py-2">our dog / their car</td>
+                <td class="py-2 text-amber-300 font-bold">ours / theirs</td>
+                <td class="py-2 text-slate-400">後面絕對不能再加名詞！</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 互動案件遊戲 -->
+        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-xs font-bold text-purple-400 uppercase tracking-wider block">失物認領庭審</span>
+              <h3 class="text-base md:text-lg font-bold text-white">請選擇適當的所有格代名詞，讓物品回歸主人手中！</h3>
             </div>
-            <p class="text-sm text-slate-300 mt-2">
-              <span class="text-amber-300 font-mono">Before I slept,</span> I brushed my teeth. (O)<br>
-              <span class="line-through text-rose-400 font-mono">Before I slept</span> I brushed my teeth. (X)
-            </p>
-            <div id="trap-2" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
-              <strong class="text-slate-200">理由：</strong> 連接詞副詞子句放在句首時，兩句之間<strong>務必打逗號 (,)</strong>！如果是 <em>"I brushed my teeth before I slept."</em> 則<strong>不可加逗號</strong>。
+            <span class="text-xs bg-slate-900 border border-slate-700 px-3 py-1 rounded-full text-slate-300">
+              案件 <span id="poss-court-id" class="text-amber-400 font-bold">1</span> / 4
+            </span>
+          </div>
+
+          <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 flex flex-col md:flex-row items-center gap-6">
+            <div id="poss-item-icon" class="text-6xl p-4 bg-slate-800 rounded-2xl">📱</div>
+            <div class="space-y-2 flex-1 text-center md:text-left">
+              <span id="poss-owner" class="text-xs font-bold text-purple-400 uppercase block">失主：Amy 的手機</span>
+              <div id="poss-prompt" class="text-base md:text-lg font-bold text-white font-mono">
+                "This isn't my phone. It's Amy's. In other words, it is ______."
+              </div>
             </div>
           </div>
 
-          <!-- 陷阱 3 -->
-          <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-bold text-rose-400">陷阱 3：所有格代名詞後面偷帶名詞</span>
-              <button onclick="toggleTrap('trap-3')" class="text-xs text-amber-400 hover:underline">看解析 ▾</button>
-            </div>
-            <p class="text-sm text-slate-300 mt-2">
-              This is <span class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">mine</span>. (O) <br>
-              This is <span class="line-through text-rose-400 font-mono">mine pen</span>. (X)
-            </p>
-            <div id="trap-3" class="hidden mt-3 p-3 bg-slate-900 rounded-xl text-xs text-slate-400 border border-slate-800">
-              <strong class="text-slate-200">理由：</strong> <strong>Mine = My pen</strong>。如果講了 <em>mine pen</em> 就等於講了 <em>my pen pen</em>！所有格代名詞後面<strong>絕對不能再接任何名詞</strong>。
-            </div>
+          <div id="poss-options" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"></div>
+          <div id="poss-feedback" class="mt-4 hidden p-3 rounded-xl text-center text-sm font-bold"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 段考綜合大魔王測驗 -->
+    <section id="sec-quiz" class="tab-content hidden space-y-6">
+      <div class="bg-gradient-to-br from-rose-950/70 to-slate-900 border border-rose-500/30 p-6 rounded-3xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <span class="text-2xl">🔥</span> 國二綜合段考大魔王（四大文法混合題）
+          </h2>
+          <span class="bg-rose-900/60 border border-rose-400/40 text-rose-200 text-xs px-3 py-1 rounded-full font-bold">
+            倒數挑戰
+          </span>
+        </div>
+
+        <p class="text-xs md:text-sm text-slate-300 mb-4">
+          包含「天氣問答、Before/After、授與動詞、所有格代名詞」的歷屆精選模擬題，每答對一題積分 +20！
+        </p>
+
+        <div id="quiz-container" class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span id="quiz-progress">題目 1 / 5</span>
+            <span id="quiz-category" class="text-amber-400 font-bold">【天氣題型】</span>
           </div>
+
+          <div id="quiz-question" class="text-base md:text-lg font-bold text-white leading-relaxed">
+            Q: ______ the weather like in New York yesterday?
+          </div>
+
+          <div id="quiz-options-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2"></div>
+          <div id="quiz-result-box" class="hidden p-4 rounded-xl text-sm font-bold"></div>
         </div>
       </div>
     </section>
@@ -287,12 +404,19 @@
 
   <!-- 頁尾 -->
   <footer class="text-center py-6 text-xs text-slate-500 border-t border-slate-800">
-    翰林版國二英文專用 ✕ 互動教學講義單頁網頁
+    國二英文互動特訓基地 ✕ 翰林版重點文法互動全集
   </footer>
 
   <script>
-    // --- 音效生成器 (Web Audio API) ---
-    function playBeep(freq = 520, duration = 0.15) {
+    // --- 全局狀態與音效 ---
+    let globalScore = 0;
+
+    function addScore(pts) {
+      globalScore += pts;
+      document.getElementById('global-score').innerText = globalScore;
+    }
+
+    function playTone(freq = 520, duration = 0.15) {
       try {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const osc = audioCtx.createOscillator();
@@ -306,11 +430,10 @@
         osc.start();
         osc.stop(audioCtx.currentTime + duration);
       } catch (e) {
-        console.log("Audio not allowed yet");
+        console.log("Audio waiting for user gesture");
       }
     }
 
-    // --- 語音唸讀 (SpeechSynthesis) ---
     function speakText(text) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
@@ -321,23 +444,22 @@
       }
     }
 
-    function speakSentence(elementId) {
-      const txt = document.getElementById(elementId).innerText;
+    function speakSentence(id) {
+      const txt = document.getElementById(id).innerText;
       speakText(txt);
     }
 
     function fireConfetti() {
-      playBeep(880, 0.2);
+      playTone(880, 0.25);
       confetti({
-        particleCount: 50,
-        spread: 60,
+        particleCount: 60,
+        spread: 70,
         origin: { y: 0.8 }
       });
     }
 
-    // --- 切換 Tab ---
     function switchTab(tabId) {
-      playBeep(440, 0.08);
+      playTone(400, 0.08);
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('bg-amber-400', 'text-slate-950', 'shadow-md');
@@ -349,163 +471,350 @@
       activeBtn.classList.remove('text-slate-300');
     }
 
-    // --- 迷因產生器資料 ---
-    const memes = [
+    // --- 1. 天氣單元資料與邏輯 ---
+    const weatherData = [
       {
-        emoji: "🎒",
-        title: "當老師說：把課本全部收進抽屜...",
-        desc: "心跳直接飆到 180 的瞬間",
-        sentence: "When the teacher says 'Take out a piece of paper', everyone panics."
+        city: "台北 (Taipei)",
+        icon: "🌧️",
+        desc: "台北正在下大雨，請用「形容詞」句型回答：",
+        prompt: "It is very ______ today.",
+        ans: "rainy",
+        options: ["rainy", "rains", "rained", "rain"]
       },
       {
-        emoji: "🚪",
-        title: "當媽媽不敲門直接推開房間門時...",
-        desc: "明明在寫功課，看起來卻像在做壞事",
-        sentence: "When Mom opens my door without knocking, I freeze."
+        city: "倫敦 (London)",
+        icon: "🌫️",
+        desc: "倫敦起大霧，想問『倫敦今天天氣如何？』(有 like)：",
+        prompt: "______ is the weather like in London today?",
+        ans: "What",
+        options: ["What", "How", "Where", "When"]
       },
       {
-        emoji: "⏰",
-        title: "鬧鐘響了，你以為還有很久...",
-        desc: "結果再閉眼 5 秒，世界已經過了 1 小時",
-        sentence: "When I close my eyes for five seconds, one hour passes."
+        city: "北海道 (Hokkaido)",
+        icon: "❄️",
+        desc: "北海道正在下大雪，請用「動詞」句型回答：",
+        prompt: "It ______ a lot in winter.",
+        ans: "snows",
+        options: ["snows", "snowy", "is snow", "has snowy"]
       },
       {
-        emoji: "🍕",
-        title: "當你弟偷吃你留在冰箱最後一片披薩...",
-        desc: "手足世界大戰一觸即發",
-        sentence: "When my brother eats my pizza, I get mad."
+        city: "紐約 (New York)",
+        icon: "☔",
+        desc: "紐約昨天雨水很多，請用「不可數名詞」句型回答：",
+        prompt: "We had a lot of ______ yesterday.",
+        ans: "rain",
+        options: ["rain", "rains", "rainy", "snowy"]
       }
     ];
 
-    let currentMemeIdx = 0;
-    function renderMeme() {
-      const m = memes[currentMemeIdx];
-      document.getElementById('meme-emoji').innerText = m.emoji;
-      document.getElementById('meme-title').innerText = m.title;
-      document.getElementById('meme-desc').innerText = m.desc;
-      document.getElementById('meme-sentence').innerText = m.sentence;
-    }
-    function nextMeme() {
-      currentMemeIdx = (currentMemeIdx + 1) % memes.length;
-      renderMeme();
-      playBeep(600, 0.1);
-    }
-    function speakCurrentSentence() {
-      const s = memes[currentMemeIdx].sentence;
-      speakText(s);
-    }
+    let weatherIdx = 0;
 
-    // --- 失物招領法庭資料 ---
-    const courtCases = [
-      {
-        icon: "🎧",
-        claimant: "失主：Leo 的耳機",
-        prompt: "This is Leo's wireless earphone. It is not yours, it is ______.",
-        answer: "his",
-        options: ["he's", "his", "him", "her"]
-      },
-      {
-        icon: "🎒",
-        claimant: "失主：Tina 的書包",
-        prompt: "That pink backpack belongs to Tina. It is ______.",
-        answer: "hers",
-        options: ["her", "hers", "she's", "their"]
-      },
-      {
-        icon: "🚲",
-        claimant: "失主：我們全家的腳踏車",
-        prompt: "You can ride your bike, and we will ride ______.",
-        answer: "ours",
-        options: ["our", "ours", "us", "we's"]
-      },
-      {
-        icon: "✏️",
-        claimant: "失主：我的自動鉛筆",
-        prompt: "Don't take that pencil! It is not yours, it is ______.",
-        answer: "mine",
-        options: ["my", "me", "mine", "I"]
-      }
-    ];
+    function renderWeather() {
+      const cur = weatherData[weatherIdx];
+      document.getElementById('weather-city-title').innerText = "連線城市：" + cur.city;
+      document.getElementById('weather-icon').innerText = cur.icon;
+      document.getElementById('weather-condition-desc').innerText = cur.desc;
+      document.getElementById('weather-prompt').innerText = cur.prompt;
 
-    let currentCaseIdx = 0;
-    let score = 0;
-
-    function renderCourtCase() {
-      const c = courtCases[currentCaseIdx];
-      document.getElementById('case-item-icon').innerText = c.icon;
-      document.getElementById('case-claimant').innerText = c.claimant;
-      document.getElementById('case-prompt').innerHTML = c.prompt.replace("______", '<span class="text-amber-400 underline decoration-wavy">______</span>');
-      
-      const optContainer = document.getElementById('court-options');
-      optContainer.innerHTML = '';
-      c.options.forEach(opt => {
+      const optBox = document.getElementById('weather-options');
+      optBox.innerHTML = '';
+      cur.options.forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = "py-3 px-4 bg-slate-900 hover:bg-indigo-600 text-white font-mono font-bold text-lg rounded-xl border border-slate-700 transition bounce-active";
+        btn.className = "py-3 px-4 bg-slate-900 hover:bg-sky-600 text-white font-mono font-bold text-base rounded-xl border border-slate-700 transition bounce-active";
         btn.innerText = opt;
-        btn.onclick = () => checkAnswer(opt);
-        optContainer.appendChild(btn);
+        btn.onclick = () => checkWeatherAnswer(opt);
+        optBox.appendChild(btn);
       });
-
-      const fb = document.getElementById('court-feedback');
-      fb.classList.add('hidden');
+      document.getElementById('weather-feedback').classList.add('hidden');
     }
 
-    function checkAnswer(chosen) {
-      const c = courtCases[currentCaseIdx];
-      const fb = document.getElementById('court-feedback');
+    function checkWeatherAnswer(choice) {
+      const cur = weatherData[weatherIdx];
+      const fb = document.getElementById('weather-feedback');
       fb.classList.remove('hidden');
 
-      if (chosen === c.answer) {
-        score += 10;
-        document.getElementById('court-score').innerText = score;
-        fb.className = "mt-4 p-4 rounded-xl text-center text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
-        fb.innerHTML = `🎉 答對了！法官判案成功！所有格代名詞正是 <strong>${chosen}</strong>。`;
+      if (choice === cur.ans) {
+        addScore(10);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        fb.innerHTML = `🎉 答對了！播報非常專業！`;
         fireConfetti();
         setTimeout(() => {
-          currentCaseIdx = (currentCaseIdx + 1) % courtCases.length;
-          renderCourtCase();
-        }, 1500);
+          weatherIdx = (weatherIdx + 1) % weatherData.length;
+          renderWeather();
+        }, 1300);
       } else {
-        playBeep(220, 0.2);
-        fb.className = "mt-4 p-4 rounded-xl text-center text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
-        fb.innerHTML = `❌ 哎呀不對喔！仔細想想公式：所有格 + 名詞 = 所有格代名詞。再試一次！`;
+        playTone(220, 0.2);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        fb.innerHTML = `❌ 哎呀答錯囉！注意看是需要動詞、形容詞還是不可數名詞？`;
       }
     }
 
-    // --- 時間軸模式設定 ---
+    function nextWeatherCity() {
+      weatherIdx = (weatherIdx + 1) % weatherData.length;
+      renderWeather();
+      playTone(550, 0.1);
+    }
+
+    // --- 2. 時間軸模式與測驗 ---
     function setChronoMode(mode) {
-      playBeep(520, 0.1);
+      playTone(520, 0.1);
       document.querySelectorAll('.chrono-btn').forEach(b => {
         b.classList.remove('bg-amber-400', 'text-slate-950');
-        b.classList.add('bg-slate-700', 'text-slate-200');
+        b.classList.add('bg-slate-800', 'text-slate-300');
       });
       document.getElementById('btn-' + mode).classList.add('bg-amber-400', 'text-slate-950');
-      document.getElementById('btn-' + mode).classList.remove('bg-slate-700', 'text-slate-200');
+      document.getElementById('btn-' + mode).classList.remove('bg-slate-800', 'text-slate-300');
 
       const disp = document.getElementById('chrono-sentence-display');
       if (mode === 'before_mid') {
-        disp.innerHTML = 'I brush my teeth <span class="text-white underline decoration-amber-400 font-black">before</span> I go to bed.';
+        disp.innerHTML = 'Leo finishes homework <span class="text-white underline decoration-amber-400 font-black">before</span> he plays video games.';
       } else if (mode === 'before_front') {
-        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">Before</span> I go to bed<span class="text-rose-400 text-2xl font-black">,</span> I brush my teeth.';
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">Before</span> Leo plays video games<span class="text-rose-400 text-2xl font-black">,</span> he finishes homework.';
       } else if (mode === 'after_mid') {
-        disp.innerHTML = 'I go to bed <span class="text-white underline decoration-amber-400 font-black">after</span> I brush my teeth.';
+        disp.innerHTML = 'Leo plays video games <span class="text-white underline decoration-amber-400 font-black">after</span> he finishes homework.';
       } else if (mode === 'after_front') {
-        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">After</span> I brush my teeth<span class="text-rose-400 text-2xl font-black">,</span> I go to bed.';
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">After</span> Leo finishes homework<span class="text-rose-400 text-2xl font-black">,</span> he plays video games.';
       } else if (mode === 'when_front') {
-        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">When</span> it is 10 PM<span class="text-rose-400 text-2xl font-black">,</span> I brush my teeth.';
+        disp.innerHTML = '<span class="text-white underline decoration-amber-400 font-black">When</span> Leo is free<span class="text-rose-400 text-2xl font-black">,</span> he finishes homework.';
       }
     }
 
-    function toggleTrap(id) {
-      const el = document.getElementById(id);
-      el.classList.toggle('hidden');
+    function answerChronoQuiz(choice) {
+      const fb = document.getElementById('chrono-quiz-feedback');
+      fb.classList.remove('hidden');
+      if (choice === 1) {
+        addScore(10);
+        fb.className = "mt-3 p-3 rounded-xl text-xs font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        fb.innerHTML = "🎉 完全正確！After 帶領的子句代表先發生的事，所以他「先吃了早餐」，之後才刷牙！";
+        fireConfetti();
+      } else {
+        playTone(220, 0.2);
+        fb.className = "mt-3 p-3 rounded-xl text-xs font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        fb.innerHTML = "❌ 哎呀弄反囉！After he ate breakfast 意思是「在他吃完早餐之後」，表示吃早餐是【第一動作】！";
+      }
     }
 
-    // 初始渲染
+    // --- 3. 授與動詞分揀遊戲 ---
+    const dativeCases = [
+      {
+        icon: "🎂",
+        sentence: "Dad made a delicious chocolate cake ______ me.",
+        ans: "for",
+        hint: "make 需要花時間跟愛心製作，用 for！"
+      },
+      {
+        icon: "💌",
+        sentence: "Emily sent a postcard ______ her best friend.",
+        ans: "to",
+        hint: "send 是把東西寄送轉交過去，有方向性，用 to！"
+      },
+      {
+        icon: "🎸",
+        sentence: "The teacher taught English songs ______ the students.",
+        ans: "to",
+        hint: "teach 是將知識教給學生，有傳遞方向，用 to！"
+      },
+      {
+        icon: "🎁",
+        sentence: "My uncle bought a brand new Nintendo Switch ______ my brother.",
+        ans: "for",
+        hint: "buy 是出錢為某人購買，用 for！"
+      }
+    ];
+
+    let dativeIdx = 0;
+
+    function renderDativeCase() {
+      const cur = dativeCases[dativeIdx];
+      document.getElementById('dative-round').innerText = dativeIdx + 1;
+      document.getElementById('dative-item-icon').innerText = cur.icon;
+      document.getElementById('dative-sentence').innerText = cur.sentence;
+      document.getElementById('dative-feedback').classList.add('hidden');
+    }
+
+    function checkDativeAnswer(choice) {
+      const cur = dativeCases[dativeIdx];
+      const fb = document.getElementById('dative-feedback');
+      fb.classList.remove('hidden');
+
+      if (choice === cur.ans) {
+        addScore(10);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        fb.innerHTML = `🎉 投遞成功！解析：${cur.hint}`;
+        fireConfetti();
+        setTimeout(() => {
+          dativeIdx = (dativeIdx + 1) % dativeCases.length;
+          renderDativeCase();
+        }, 1500);
+      } else {
+        playTone(220, 0.2);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        fb.innerHTML = `❌ 寄錯箱子啦！再想想這個動作是「直接轉交」還是「花心力特製」？`;
+      }
+    }
+
+    // --- 4. 所有格法庭 ---
+    const possCases = [
+      {
+        icon: "📱",
+        owner: "失主：Amy 的手機",
+        prompt: "This isn't my phone. It's Amy's. In other words, it is ______.",
+        ans: "hers",
+        options: ["her", "hers", "she's", "their"]
+      },
+      {
+        icon: "🛹",
+        owner: "失主：我和弟弟的滑板",
+        prompt: "This skateboard belongs to my brother and me. It is ______.",
+        ans: "ours",
+        options: ["our", "ours", "us", "mine"]
+      },
+      {
+        icon: "🐶",
+        owner: "失主：小狗的小窩",
+        prompt: "The dog is sleeping in ______ little bed.",
+        ans: "its",
+        options: ["it's", "its", "its'", "his"]
+      },
+      {
+        icon: "🔑",
+        owner: "失主：你的鑰匙",
+        prompt: "I found a set of keys. Are they ______?",
+        ans: "yours",
+        options: ["your", "yours", "you", "yours'"]
+      }
+    ];
+
+    let possIdx = 0;
+
+    function renderPossCase() {
+      const cur = possCases[possIdx];
+      document.getElementById('poss-court-id').innerText = possIdx + 1;
+      document.getElementById('poss-item-icon').innerText = cur.icon;
+      document.getElementById('poss-owner').innerText = cur.owner;
+      document.getElementById('poss-prompt').innerText = cur.prompt;
+
+      const optBox = document.getElementById('poss-options');
+      optBox.innerHTML = '';
+      cur.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "py-3 px-4 bg-slate-900 hover:bg-purple-600 text-white font-mono font-bold text-base rounded-xl border border-slate-700 transition bounce-active";
+        btn.innerText = opt;
+        btn.onclick = () => checkPossAnswer(opt);
+        optBox.appendChild(btn);
+      });
+      document.getElementById('poss-feedback').classList.add('hidden');
+    }
+
+    function checkPossAnswer(choice) {
+      const cur = possCases[possIdx];
+      const fb = document.getElementById('poss-feedback');
+      fb.classList.remove('hidden');
+
+      if (choice === cur.ans) {
+        addScore(10);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        fb.innerHTML = `🎉 法官英明！物歸原主成功！`;
+        fireConfetti();
+        setTimeout(() => {
+          possIdx = (possIdx + 1) % possCases.length;
+          renderPossCase();
+        }, 1300);
+      } else {
+        playTone(220, 0.2);
+        fb.className = "mt-4 p-3 rounded-xl text-center text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        fb.innerHTML = `❌ 判錯囉！小心不要跟受格或縮寫搞混了！`;
+      }
+    }
+
+    // --- 5. 段考綜合大魔王題庫 ---
+    const quizList = [
+      {
+        cat: "【天氣問答】",
+        q: "A: ______ was the weather like in Taipei yesterday?  B: It was windy and cold.",
+        ans: "What",
+        options: ["How", "What", "Which", "Where"],
+        expl: "問天氣有 like 時必用 What！如果沒有 like 才是 How is/was the weather。"
+      },
+      {
+        cat: "【從屬連接詞】",
+        q: "______ Tom washed his hands, he ate dinner.",
+        ans: "Before",
+        options: ["After", "Before", "When", "Although"],
+        expl: "Tom 是先洗手，然後才吃晚餐！因此「在他吃晚餐之前」，用 Before he ate dinner。"
+      },
+      {
+        cat: "【授與動詞】",
+        q: "Mom cooked a big meal ______ us on my birthday.",
+        ans: "for",
+        options: ["to", "for", "with", "at"],
+        expl: "cook 屬於耗費心力特別為人準備的動詞，介系詞配 for！"
+      },
+      {
+        cat: "【代名詞陷阱】",
+        q: "The cat hurt ______ foot when it jumped off the table.",
+        ans: "its",
+        options: ["it's", "its", "his", "it"],
+        expl: "修飾名詞 foot 要用所有格 its（牠的）。It's 是 it is 的縮寫。"
+      },
+      {
+        cat: "【雙重所有格】",
+        q: "Andy is a good friend of ______. We often play basketball together.",
+        ans: "mine",
+        options: ["me", "my", "mine", "I"],
+        expl: "雙重所有格固定句型：a friend of mine，千萬不能選受格 me！"
+      }
+    ];
+
+    let quizIdx = 0;
+
+    function renderQuiz() {
+      const cur = quizList[quizIdx];
+      document.getElementById('quiz-progress').innerText = `題目 ${quizIdx + 1} / ${quizList.length}`;
+      document.getElementById('quiz-category').innerText = cur.cat;
+      document.getElementById('quiz-question').innerText = cur.q;
+
+      const optBox = document.getElementById('quiz-options-list');
+      optBox.innerHTML = '';
+      cur.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = "py-3.5 px-4 bg-slate-900 hover:bg-rose-600 text-white font-mono font-bold text-base rounded-xl border border-slate-700 transition bounce-active text-left flex items-center justify-between";
+        btn.innerHTML = `<span>${opt}</span><i class="fa-solid fa-arrow-right opacity-40 text-xs"></i>`;
+        btn.onclick = () => checkFinalQuiz(opt);
+        optBox.appendChild(btn);
+      });
+
+      document.getElementById('quiz-result-box').classList.add('hidden');
+    }
+
+    function checkFinalQuiz(choice) {
+      const cur = quizList[quizIdx];
+      const resBox = document.getElementById('quiz-result-box');
+      resBox.classList.remove('hidden');
+
+      if (choice === cur.ans) {
+        addScore(20);
+        resBox.className = "p-4 rounded-xl text-sm font-bold bg-emerald-950 border border-emerald-500/50 text-emerald-300";
+        resBox.innerHTML = `🎉 恭喜答對！+20 分！<br><span class="text-xs text-emerald-200 mt-1 block">📌 解析：${cur.expl}</span>`;
+        fireConfetti();
+        setTimeout(() => {
+          quizIdx = (quizIdx + 1) % quizList.length;
+          renderQuiz();
+        }, 1800);
+      } else {
+        playTone(180, 0.25);
+        resBox.className = "p-4 rounded-xl text-sm font-bold bg-rose-950 border border-rose-500/50 text-rose-300";
+        resBox.innerHTML = `❌ 答錯囉！魔王把分數吸走了！<br><span class="text-xs text-rose-200 mt-1 block">📌 提示：${cur.expl}</span>`;
+      }
+    }
+
+    // 初始化渲染
     window.onload = () => {
-      renderMeme();
-      renderCourtCase();
+      renderWeather();
       setChronoMode('before_mid');
+      renderDativeCase();
+      renderPossCase();
+      renderQuiz();
     };
   </script>
 </body>
