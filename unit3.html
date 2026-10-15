@@ -56,7 +56,6 @@
       <button onclick="switchTab('whenwhile')" id="tab-whenwhile" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">⚡ 4. When vs While</button>
       <button onclick="switchTab('detective')" id="tab-detective" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">🕵️ 5. 蛋糕失竊案</button>
       <button onclick="switchTab('quiz')" id="tab-quiz" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">🏆 6. 預習小測驗</button>
-      <button onclick="switchTab('videos')" id="tab-videos" class="nav-btn whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-bold transition text-slate-300 hover:text-white hover:bg-slate-700/60">📺 7. 影片 & 網站</button>
     </div>
   </header>
 
@@ -331,17 +330,6 @@
           <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2"></div>
           <div id="quiz-result" class="hidden p-4 rounded-xl text-sm font-bold"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- 7. 影片 & 網站 -->
-    <section id="sec-videos" class="tab-content hidden space-y-6">
-      <div class="bg-gradient-to-br from-emerald-950/60 to-slate-900 border border-emerald-500/30 p-6 rounded-3xl">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <h2 class="text-xl md:text-2xl font-bold flex items-center gap-2"><span class="text-2xl">📺</span> 延伸影片 & 互動網站</h2>
-          <span class="bg-emerald-900/60 border border-emerald-400/40 text-emerald-200 text-xs px-3 py-1 rounded-full font-bold">點卡片開新分頁</span>
-        </div>
-        <div id="res-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
       </div>
     </section>
 
@@ -826,31 +814,10 @@
         r.innerHTML = `❌ 正解是「${c.o[c.a]}」：${c.why}　${next}`;
       }
       if (last) {
-        const msg = qRight >= 9 ? '🏆 預習滿分等級，下次上課直接起飛！' : qRight >= 6 ? '👍 很不錯！錯的那幾題下次上課一起看。' : '💪 第一次接觸很正常，先看看第 7 區的影片再挑戰！';
+        const msg = qRight >= 9 ? '🏆 預習滿分等級，下次上課直接起飛！' : qRight >= 6 ? '👍 很不錯！錯的那幾題下次上課一起看。' : '💪 第一次接觸很正常，下次上課一起把觀念補起來！';
         r.innerHTML += `<div class="mt-3 text-white">總成績：${qRight} / ${qOrder.length}　${msg}</div><button onclick="startQuiz()" class="mt-2 px-4 py-2 bg-rose-600 hover:bg-rose-500 rounded-xl text-xs">再挑戰一次</button>`;
         if (qRight >= 9) setTimeout(fireConfetti, 500);
       }
-    }
-
-    // ---------- 7. 影片 & 網站 ----------
-    const resources = [
-      { tag: '🎥 中文講解', color: 'text-rose-300', title: '翰林國中英語第3冊第3課文法1 – 過去進行式', src: 'YouTube ・ 夏琳 Charlene 英文小教室', desc: '直接對應翰林課本的中文文法講解，適合預習或複習 was/were + V-ing。', url: 'https://www.youtube.com/watch?v=T_7WoKfrivI' },
-      { tag: '🎥 中文講解', color: 'text-rose-300', title: '時間子句 – When Ⅱ', src: '教育部教育雲 ・ 國立臺中教育大學', desc: '用「I was watching TV when the earthquake happened.」這類例句講長動作被打斷，跟第 4 區的閃電時間軸同一個概念。', url: 'https://market.cloud.edu.tw/resources/video/1850527' },
-      { tag: '🎬 影集片段', color: 'text-amber-300', title: 'Friends – Grammar, Past Continuous', src: 'YouTube ・ Higor Cavalcante', desc: '用《六人行》的片段聽真實對話裡的過去進行式，當作輕鬆的聽力挑戰。', url: 'https://www.youtube.com/watch?v=2OH-5de8Vxo' },
-      { tag: '🎬 電影預告互動題', color: 'text-amber-300', title: 'Barbie Movie – Past Simple / Past Continuous', src: 'iSLCollective（英文介面）', desc: '看《芭比》預告片，邊看邊回答過去式 vs 過去進行式的題目，適合當下課前的獎勵時間。', url: 'https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/past-simple-or-past-continuous-tense/barbie-movie-past-simplepast-continuous-task/847491' },
-      { tag: '🎮 線上小遊戲', color: 'text-emerald-300', title: 'When – While 選擇題遊戲', src: 'Wordwall', desc: '10 題 when / while 選擇題，可以切換成不同遊戲模式（打地鼠、翻牌等）。', url: 'https://wordwall.net/resource/103076219/when-while' },
-      { tag: '🎮 影片＋遊戲', color: 'text-emerald-300', title: 'How to tell the time', src: 'British Council ・ LearnEnglish Kids', desc: '動畫教 o\'clock、half past、quarter to，附兩個小遊戲和可印的學習單，報時暖身用。', url: 'https://learnenglishkids.britishcouncil.org/listen-watch/how-videos/how-tell-time' },
-      { tag: '📇 單字卡', color: 'text-sky-300', title: '佳音翰林國中英語 Book 3 – 8上 U3 單字（全）', src: 'Quizlet', desc: '本課 43 個單字（do the dishes、half、quarter、feed、sweep…），有配對和拼字遊戲可以玩。', url: 'https://quizlet.com/tw/695851872/%E4%BD%B3%E9%9F%B3%E7%BF%B0%E6%9E%97%E5%9C%8B%E4%B8%AD%E8%8B%B1%E8%AA%9Ebook-3_8%E4%B8%8Au3_%E5%96%AE%E5%AD%97%E5%85%A8-flash-cards/' }
-    ];
-    function renderResources() {
-      const g = document.getElementById('res-grid');
-      g.innerHTML = resources.map(r => `
-        <a href="${r.url}" target="_blank" rel="noopener" class="pop-card block bg-slate-950 border border-slate-800 hover:border-emerald-500/60 rounded-2xl p-4">
-          <div class="flex items-center justify-between gap-2"><span class="text-xs font-bold ${r.color}">${r.tag}</span><i class="fa-solid fa-arrow-up-right-from-square text-slate-500 text-xs"></i></div>
-          <div class="font-bold text-white mt-1">${r.title}</div>
-          <div class="text-xs text-slate-500 mt-0.5">${r.src}</div>
-          <p class="text-xs text-slate-300 mt-2 leading-relaxed">${r.desc}</p>
-        </a>`).join('');
     }
 
     // ---------- 啟動 ----------
@@ -861,7 +828,6 @@
     setWW(0); renderWWQ();
     renderCase();
     startQuiz();
-    renderResources();
   </script>
 </body>
 </html>
