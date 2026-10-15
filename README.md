@@ -16,3 +16,15 @@
 1. 將專案中的 `index.html` 更新至你的 GitHub 儲存庫根目錄。
 2. 確認專案內已有 `.github/workflows/deploy.yml` 檔案。
 3. 只要執行 `git push` 或在網頁端點選 Commit，GitHub Actions 就會自動構建並上架到公開網址！
+
+---
+
+## 🆕 Unit 3 預習頁（`unit3.html`）
+
+翰林八上 Unit 3〈Mom Was Doing the Dishes at Half Past Twelve〉預習用互動頁，從首頁右上角「Unit 3 預習闖關」進入：
+1. **報時暖身**：可撥動的時鐘，half past / a quarter to 順讀 vs 逆讀 + 看鐘搶答。
+2. **停電定格畫面**：過去進行式 `was / were + V-ing` 圖卡與問答。
+3. **造句機 ＋ V-ing 拼字挑戰**：肯定 / 否定 / 疑問 / 簡答自動造句。
+4. **When vs While**：長動作被「閃電」打斷的時間軸 + 判斷題。
+5. **生日蛋糕失竊案**：解文法鎖拿線索，抓出說謊的嫌疑人。
+6. **預習小測驗**（10 題）與 **7. 延伸影片 & 互動網站**。
